@@ -11,6 +11,7 @@ class CryptXOR : public QObject {
     QVector<ushort> toVector(QString input);
 public:
     CryptXOR();
+    CryptXOR(QVector<int> vector);
     QString crypt(const QString input);
     bool authenticate(QString tryPassword,QString encryptedPassword);
 

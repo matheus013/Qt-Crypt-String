@@ -28,6 +28,10 @@ CryptXOR::CryptXOR() {
            << 131 << 137 << 103 << 167 << 1;
 }
 
+CryptXOR::CryptXOR(QVector<int> vector) {
+    m_key = vector;
+}
+
 QString CryptXOR::crypt(const QString input) {
     QVector<ushort> vector = toVector(input);
     return toString(crypt(vector));
