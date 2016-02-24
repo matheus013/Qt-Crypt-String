@@ -1,0 +1,36 @@
+#include "cryptxor.h"
+
+QVector<ushort> CryptXOR::crypt(const QVector<ushort> input) {
+    QVector<ushort> output = input;
+    for (int i = 0; i < input.size(); i++)
+        output[i] ^= m_key[i % (sizeof(m_key) / sizeof(char)) ];
+    return output;
+}
+
+QString CryptXOR::toString(QVector<ushort> vector){
+    QString result = "";
+    for (QVector<ushort>::iterator i = vector.begin();i != vector.end() ;++i)
+        result += uchar(*i);
+    return result;
+}
+
+QVector<ushort> CryptXOR::toVector(QString input) {
+    QVector<ushort> result;
+    for (QString::iterator i = input.begin(); i != input.end(); ++i)
+        result  <<  (*i).cell();
+    return result;
+}
+
+CryptXOR::CryptXOR() {
+    m_key << 0 << 0 << 0; // make your keys
+}
+
+QString CryptXOR::crypt(const QString input) {
+    QVector<ushort> vector = toVector(input);
+    return toString(crypt(vector));
+}
+
+bool CryptXOR::authenticate(QString tryPassword, QString encryptedPassword) {
+    return tryPassword == crypt(encryptedPassword);
+}
+
